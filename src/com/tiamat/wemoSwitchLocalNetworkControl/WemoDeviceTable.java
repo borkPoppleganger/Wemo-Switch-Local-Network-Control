@@ -20,7 +20,7 @@ public class WemoDeviceTable {
 			+ "HOST: " + ssdpAddressString + ":" + ssdpPort + "\r\n"
 			+ "\r\n";
 	
-	public volatile HashMap<String, WemoDevice> deviceTable = new HashMap<String, WemoDevice>();
+	public HashMap<String, WemoDevice> table = new HashMap<String, WemoDevice>();
 	
 	//Constructors ==============================================================================//
 	public WemoDeviceTable() {
@@ -62,6 +62,9 @@ public class WemoDeviceTable {
 				WemoDevice wemoDevice = fetchWemoData(rxPacket);
 				if(wemoDevice != null) {
 					
+					table.put(wemoDevice.getFriendlyName(), wemoDevice);
+					
+					/*
 					//Debug only. Embedded device control at poll
 					if(wemoDevice.getFriendlyName().contentEquals("Lamp")) {
 						//System.out.println(wemoDevice); //Debug, print device info
@@ -77,6 +80,7 @@ public class WemoDeviceTable {
 						}
 						
 					}
+					*/
 				}
 				
 				} catch (SocketTimeoutException e) { //Exit when responses timeout
